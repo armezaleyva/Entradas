@@ -52,13 +52,13 @@ void actualizar() {
 
 	if (estadoDerecha == GLFW_PRESS) {
 		anguloTriangulo -= velocidadRotacion * tiempoDiferencial;
-		if (anguloTriangulo <= -360) {
+		if (anguloTriangulo <= -360.0f) {
 			anguloTriangulo = 0;
 		}
 	}
 	if (estadoIzquierda == GLFW_PRESS) {
 		anguloTriangulo += velocidadRotacion * tiempoDiferencial;
-		if (anguloTriangulo >= 360) {
+		if (anguloTriangulo >= 360.0f) {
 			anguloTriangulo = 0;
 		}
 	}
