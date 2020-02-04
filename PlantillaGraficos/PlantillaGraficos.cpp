@@ -68,9 +68,6 @@ void actualizar() {
 		posXTriangulo += velocidadTriangulo * cos(anguloARadianes) * tiempoDiferencial;
 		posYTriangulo += velocidadTriangulo * sin(anguloARadianes) * tiempoDiferencial;
 	}
-	if (estadoAbajo == GLFW_PRESS) {
-		posYTriangulo -= velocidadTriangulo * tiempoDiferencial;
-	}
 
 	tiempoAnterior = tiempoActual;
 }
