@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define GLEW_STATIC
 
@@ -16,8 +17,10 @@ using namespace std;
 // Declarar una ventana
 GLFWwindow* window;
 float posXTriangulo = 0.0f, posYTriangulo = 0.0f;
+float anguloTriangulo = 0.0f;
 double tiempoActual, tiempoAnterior;
-double velocidadTriangulo = 0.7;
+double velocidadTriangulo = 0.8;
+double velocidadRotacion = 50.0;
 
 void teclado_callback(GLFWwindow *window, int key, int scancode,
 	int action, int mods) {
@@ -48,13 +51,22 @@ void actualizar() {
 	int estadoAbajo = glfwGetKey(window, GLFW_KEY_DOWN);
 
 	if (estadoDerecha == GLFW_PRESS) {
-		posXTriangulo += velocidadTriangulo * tiempoDiferencial;
+		anguloTriangulo -= velocidadRotacion * tiempoDiferencial;
+		if (anguloTriangulo <= -360) {
+			anguloTriangulo = 0;
+		}
 	}
 	if (estadoIzquierda == GLFW_PRESS) {
-		posXTriangulo -= velocidadTriangulo * tiempoDiferencial;
+		anguloTriangulo += velocidadRotacion * tiempoDiferencial;
+		if (anguloTriangulo >= 360) {
+			anguloTriangulo = 0;
+		}
 	}
 	if (estadoArriba == GLFW_PRESS) {
-		posYTriangulo += velocidadTriangulo * tiempoDiferencial;
+		double anguloARadianes = (anguloTriangulo + 90.0) * (3.14159 / 180.0);
+
+		posXTriangulo += velocidadTriangulo * cos(anguloARadianes) * tiempoDiferencial;
+		posYTriangulo += velocidadTriangulo * sin(anguloARadianes) * tiempoDiferencial;
 	}
 	if (estadoAbajo == GLFW_PRESS) {
 		posYTriangulo -= velocidadTriangulo * tiempoDiferencial;
@@ -66,6 +78,9 @@ void actualizar() {
 void dibujar() {
 	glPushMatrix();
 	glTranslatef(posXTriangulo, posYTriangulo, 0.0f);
+	glRotatef(anguloTriangulo, 0.0f, 0.0f, 1.0f);
+	//glTranslatef(posXTriangulo, posYTriangulo, 0.0f);
+	
 	glBegin(GL_TRIANGLES);
 
 	glColor3f(0.0f, 0.0f, 0.0f);
