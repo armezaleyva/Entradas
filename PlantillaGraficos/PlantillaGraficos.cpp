@@ -67,6 +67,20 @@ void actualizar() {
 
 		posXTriangulo += velocidadTriangulo * cos(anguloARadianes) * tiempoDiferencial;
 		posYTriangulo += velocidadTriangulo * sin(anguloARadianes) * tiempoDiferencial;
+
+		if (posXTriangulo <= -1.08) {
+			posXTriangulo = 1.00;
+		}
+		else if (posXTriangulo >= 1.08) {
+			posXTriangulo = -1.00;
+		}
+
+		if (posYTriangulo <= -1.08) {
+			posYTriangulo = 1.00;
+		}
+		else if (posYTriangulo >= 1.08) {
+			posYTriangulo = -1.00;
+		}
 	}
 
 	tiempoAnterior = tiempoActual;
@@ -76,7 +90,7 @@ void dibujar() {
 	glPushMatrix();
 	glTranslatef(posXTriangulo, posYTriangulo, 0.0f);
 	glRotatef(anguloTriangulo, 0.0f, 0.0f, 1.0f);
-	//glTranslatef(posXTriangulo, posYTriangulo, 0.0f);
+	glScalef(0.4f, 0.7f, 0.7f);
 	
 	glBegin(GL_TRIANGLES);
 
